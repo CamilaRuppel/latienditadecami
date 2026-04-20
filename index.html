@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La tiendita de Cami</title>
+
+<link rel="icon" href="logo.png.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom, #fdfbfb, #ebedee);
+}
+
+/* HEADER */
+.header-pro {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.95);
+  padding: 15px;
+  text-align: center;
+  z-index: 1000;
+  transition: top 0.18s ease, opacity 0.18s ease;
+  opacity: 1;
+}
+
+.header-pro.hide {
+  top: -120px;
+  opacity: 0;
+}
+
+.main-container {
+  margin-top: 70px;
+}
+
+.header-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+h1 {
+  margin: 0;
+  color: #e09dae;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.descripcion {
+  color: #BFA2DB;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.3; /* 🔥 más compacto */
+  max-width: 320px; /* 🔥 controla ancho */
+  margin-left: auto;
+  margin-right: auto;
+}
+.logo-pro { 
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* MAIN GRID */
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+}
+
+
+/* PRODUCTOS */
+.productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 5fr));
+  gap: 15px;
+}
+
+.card {
+  background: white;
+  border-radius: 24px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card img { 
+  width: 100%;
+  height: 300px; /* 🔥 más grande */
+  object-fit: cover; /* 🔥 llena mejor */
+  border-radius: 18px;
+  padding: 2px; /* 🔥 casi sin borde */
+}
+
+.card h3 {
+  margin: 14px 0 0;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  text-align: center;
+  color: #1b1b1b;
+}
+
+.card-precio {
+  font-size: 0.9rem;
+  color: #e09dae;
+  font-weight: 700;
+  text-align: center;
+  margin: 8px 0 6px;
+}
+
+.card-aromas {
+  font-size: 0.8rem;
+  color: #666;
+  text-align: center;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+}
+
+.redes {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 40px;
+}
+
+.redes a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+.redes img {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.redes h3 {
+  margin-top: 8px;
+  font-size: 14px;
+  color: black;
+  font-weight: 500;
+}
+
+.card:hover { transform: scale(1.03); }
+
+/* CARRITO ARRIBA DERECHA */
+.carrito {
+  display: none; /* ahora empieza oculto */
+  position: fixed;
+  top: 35px;
+  right: 20px;
+  width: 400px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ecdcfc;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  z-index: 1000;
+}
+
+.carrito h2 {
+  margin-top: 0;
+}
+
+.total {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* ITEMS DEL CARRITO */
+.item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  font-size: 13px;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 10px;
+  border: 1px solid #f0e6f5;
+}
+
+.item .cantidad {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.item .cantidad button {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: #e09dae;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.item .cantidad button:hover {
+  background: #d17a8f;
+}
+
+.item .detalle { 
+  flex: 1;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top:0; 
+  left:0;
+  width:100%; 
+  height:100%;
+  background: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-contenido {
+  background: white;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 420px; /* 🔥 más grande en PC */
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 20px;
+  position: relative;
+  text-align: center;
+}
+
+/* CRUZ */
+.cerrar-modal {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* TITULO */
+#modal-titulo {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/* OPCIONES CENTRADAS */
+#modal-opciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* MODAL OPCIONES */
+#modal-opciones button {
+  margin: 5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f3b6c2;
+  cursor: pointer;
+  border: none;
+  font-size: 14px;
+  min-width: 70px; /* 🔥 clave para que no se achiquen */
+  text-align: center;
+}
+
+/* cuando seleccionás */
+#modal-opciones button.activa {
+  background: #e09dae;
+  color: white;
+  border: 1px solid #e09dae;
+}
+
+.sin-stock {
+  background: #ccc !important;
+  color: #666;
+  cursor: not-allowed;
+
+  /* 🔥 IGUALAR TAMAÑO */
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 10px;
+  margin: 5px;
+  min-width: 70px;
+  text-align: center;
+}
+
+/* BOTON AGREGAR */
+#modal-opciones button {
+  margin: 5px;
+  padding: 8px;
+  border-radius: 10px;
+  background: pink;
+  cursor: pointer;
+
+  border: none;        /* ❌ saca el borde gris */
+  outline: none;       /* ❌ saca el borde al hacer click */
+  box-shadow: none;    /* ❌ por si el navegador mete sombra */
+}
+
+#modal-opciones .activa {
+  background: black;
+  color: white;
+}
+
+
+/* BOTÓN AGREGAR (separado) */
+.modal-contenido > button:last-child {
+  width: 100%;
+  padding: 12px;
+  border-radius: 15px;
+  border: none;
+  background-color: #6b178b;
+  color: white;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.sin-stock {
+  background: #ccc !important;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* ========================
+   BOTÓN DEL CARRITO
+======================== */
+#btn-carrito {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: none;
+    background: #e6d5f3;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: fixed;   /* siempre fijo en pantalla */
+    top: 10px;         /* distancia desde arriba en PC */
+    right: 10px;       /* distancia desde la derecha en PC */
+    z-index: 10000;    /* por encima de todo */
+    transition: all 0.3s ease;
+}
+
+/* BADGE DEL CARRITO */
+#btn-carrito::after {
+    content: attr(data-cantidad);
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 14px;
+    height: 14px;
+    background: #a12ea1;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    visibility: hidden;
+}
+
+#btn-carrito[data-cantidad="0"]::after {
+    visibility: hidden;
+}
+
+#btn-carrito:not([data-cantidad="0"])::after {
+    visibility: visible;
+}
+
+/* ========================
+   CARRITO DESPLEGABLE
+======================== */
+.carrito {
+    display: none;        /* empieza oculto */
+    position: fixed;
+    top: 60px;            /* debajo del botón en PC */
+    right: 10px;
+    width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #ecdcfc;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    z-index: 1000;
+}
+
+.carrito h2 {
+    margin-top: 0;
+    font-size: 16px;
+    color: #1b1b1b;
+    text-align: center;
+}
+
+.carrito .total {
+    margin: 15px 0;
+    padding: 12px;
+    background: white;
+    border-radius: 15px;
+    border: 2px solid #e09dae;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ========================
+   AJUSTES PARA CELULAR
+======================== */
+@media (max-width: 768px) {
+    .productos {
+        grid-template-columns: repeat(3, 1fr); /* 🔥 3 por fila */
+        gap: 10px;
+    }
+
+    .card img {
+        height: 150px; /* 🔥 más grande en celular */
+    }
+
+    .card {
+        padding: 4px; /* 🔥 menos borde blanco */
+    }
+
+    .card h3 {
+        font-size: 0.8rem;
+    }
+
+    .card-precio {
+        font-size: 0.75rem;
+    }
+
+    .card-aromas {
+        font-size: 0.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .productos {
+        grid-template-columns: repeat(2, 1fr); /* 🔥 2 por fila en pantallas muy chicas */
+    }
+}
+
+@media (max-width: 768px) {
+    /* 🔥 AJUSTE DEL CARRITO */
+    .carrito {
+        top: 60px;
+        right: 10px;
+        width: calc(100% - 20px);
+        max-height: 75vh;
+        padding: 12px;
+        border-radius: 18px;
+    }
+
+    .item {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .item .detalle {
+        font-size: 12px;
+    }
+
+    .item .cantidad button {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+    }
+
+    .carrito .total {
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 12px;
+    }
+
+    .carrito button {
+        border-radius: 20px;
+        font-size: 15px;
+        position: sticky;
+        bottom: 0;
+    }
+}
+
+  /* LETRA TOTALMENTE UNIFORME CARRITO */
+.carrito * {
+  font-family: 'Poppins', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+}
+
+/* Solo los botones + y - siguen en negrita */
+.carrito .item .cantidad button {
+  font-weight: bold !important;
+}
+
+.img {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========================
+   OPCIONES DE ENVÍO
+======================== */
+.envio {
+  margin: 15px 0;
+  padding: 12px;
+  background: white;
+  border-radius: 15px;
+  border: 2px solid #e09dae;
+}
+
+.envio strong {
+  display: block;
+  margin-bottom: 10px;
+  color: #1b1b1b;
+  font-size: 14px;
+}
+
+.envio label {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.envio label:hover {
+  background: #f5e6f8;
+}
+
+.envio input[type="radio"] {
+  margin-right: 10px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #e09dae;
+}
+
+.envio label span {
+  font-size: 13px;
+  color: #333;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header class="header-pro">
+  <div class="header-content">
+    <img src="logo.png.png" class="logo-pro">
+    <h1>La tiendita de Cami</h1>
+  </div>
+</header>
+
+<div class="main-container">
+
+<section class="descripcion">
+  Todo lo que necesitás para tu hogar y tu estilo, en un solo lugar&nbsp;✨
+</section>
+
+<div class="productos">
+
+<!-- PRODUCTOS -->
+<!-- SAHUMERIOS -->
+<div class="card" onclick="abrirModal('Tibetanos', 3800, [
+  {nombre:'Coco Vainilla'},
+  {nombre: 'Berry Kiss'},
+  {nombre: 'Lavandas del Valle', sinStock:true},
+  {nombre:'Vainillas Encantadas'}
+])">
+  <img src="sahumerios.jpg">
+  <div>
+    <h3>Sahumerios</h3>
+    <p class="card-precio">$3.800</p>
+    <p class="card-aromas">Aromanza</p>
+  </div>
+</div>
+
+<!-- DIFUSORES ILUMINARTE -->
+<div class="card" onclick="abrirModal('60ml', 2800, [
+  {nombre:'Mil Flores', sinStock:true},
+  {nombre:'Agua Marina'},
+  {nombre:'Cereza Patchouli'},
+  {nombre:'Choco Dubai'},
+  {nombre:'Tutti Frutti Gum', sinStock:true},
+  {nombre:'Pimpollos de Jazmín', sinStock:true}
+])">
+  <img src="difusores-iluminarte.jpg">
+  <div>
+    <h3>Difusores Iluminarte</h3>
+    <p class="card-precio">$2.800</p>
+    <p class="card-aromas">Prestige</p>
+  </div>
+</div>
+
+<!-- DIFUSORES AEROSOFT -->
+<div class="card" onclick="abrirModal('250ml', 3400, [
+  {nombre:'María', sinStock:true},
+  {nombre:'Lady'},
+  {nombre:'Vainilla'}
+])">
+  <img src="difusores-aerosoft.jpg">
+  <div>
+    <h3>Difusores Aero Soft</h3>
+    <p class="card-precio">$3.400</p>
+    <p class="card-aromas">Aromatizantes Textiles</p>
+  </div>
+</div>
+
+<!-- DIFUSORES TAO -->
+<div class="card" onclick="abrirModal('250ml', 4000, [
+  {nombre:'Geranio', sinStock:true},
+  {nombre:'Jazmín'}
+])">
+  <img src="difusores-tao.jpg">
+  <div>
+    <h3>Difusores Tao</h3>
+    <p class="card-precio">$4.000</p>
+    <p class="card-aromas">Aromatizantes Textiles</p>
+  </div>
+</div>
+
+<!-- CARTERA -->
+<div class="card" onclick="abrirModalSimple('Cartera', 36200, 'Bag Queen Rosa')">
+  <img src="cartera.jpeg">
+  <div>
+    <h3>Cartera</h3>
+    <p class="card-precio">$36.200</p>
+    <p class="card-aromas">Bag Queen Rosa</p>
+  </div>
+</div>
+
+<!-- AROMATIZANTES MARCIANITO -->
+<div class="card" onclick="abrirModal('10ml', 4900, [
+  {nombre:'Ocean Blue'},
+  {nombre:'Uva Dulce'},
+  {nombre:'Dulces Vainillas'},
+  {nombre:'Auto Sport'},
+  {nombre:'La vida es bella'},
+  {nombre:'Hawainn'}
+])">
+  <img src="aromatizantes-autos.jpg">
+  <div>
+    <h3>Aromatizantes Marcianito</h3>
+    <p class="card-precio">$4.900</p>
+    <p class="card-aromas">Para autos</p>
+  </div>
+</div>
+
+
+<!-- AROMATIZANTE REAL ESSENZE -->
+<div class="card" onclick="abrirModal('400ml', 6300, [
+  {nombre:'Sandía', sinStock:true},
+  {nombre:'Ananá'},
+  {nombre:'Pera', sinStock:true}
+])">
+  <img src="aromatizantes-real.jpg">
+  <div>
+    <h3>Aromatizantes Real Essenze</h3>
+    <p class="card-precio">$6.300</p>
+    <p class="card-aromas">Para ambientes y telas</p>
+  </div>
+</div>
+
+
+<!-- VELAS -->
+<div class="card" onclick="abrirModal('Aromanza', 3000, [
+  {nombre:'Violetas'},
+  {nombre:'Azul'},
+  {nombre:'Roja', sinStock:true}
+])">
+  <img src="velas.jpg">
+  <div>
+    <h3>Velas</h3>
+    <p class="card-precio">$3.000</p>
+    <p class="card-aromas">Para hornitos</p>
+  </div>
+</div>
+
+<!-- PASAMONTAÑAS -->
+<div class="card" onclick="abrirModalImagenes('NK Térmico Importado', 6300)">
+  <img src="pasamontañank.jpeg">
+  <div>
+    <h3>Pasamontañas</h3>
+    <p class="card-precio">$6.300</p>
+    <p class="card-aromas">Negro</p>
+  </div>
+</div>
+
+
+<!-- GORRITO MATE Y TERMO -->
+<div class="card" onclick="abrirModalGorrito('Gorrito Mate y Termo', 8500)">
+  <img src="gorritomateytermo.jpg">
+  <div>
+    <h3>Gorrito mate y termo </h3>
+    <p class="card-precio">$8.500</p>
+    <p class="card-aromas">Varios colores</p>
+  </div>
+</div>
+
+<!-- GUANTES PARA MOTO NK TORNASOLADO -->
+<div class="card" onclick="abrirModalGuantes('Guantes para Moto NK Tornasolado', 12800)">
+  <img src="guantes.jpg">
+  <div>
+    <h3>Guantes para Moto NK Tornasolado</h3>
+    <p class="card-precio">$12.800</p>
+    <p class="card-aromas">Varios colores</p>
+  </div>
+</div>
+
+<!-- GORRO SOL DE MAYO BORDADO -->
+<div class="card" onclick="abrirModalGorroSol('Gorro Sol de Mayo Bordado', 8600)">
+  <img src="gorrosoldemayo.jpeg">
+  <div>
+    <h3>Gorro Sol de Mayo Bordado</h3>
+    <p class="card-precio">$8.600</p>
+    <p class="card-aromas">Varios colores</p>
+  </div>
+</div>
+
+<!-- GUANTE TÁCTIL DE MOTO AD -->
+<div class="card" onclick="abrirModalGuantetactil('Sport', 9400)">
+  <img src="guantetactil.jpg">
+  <div>
+    <h3>Guante táctil</h3>
+    <p class="card-precio">$9.400</p>
+    <p class="card-aromas">De neopreno</p>
+  </div>
+
+</div>
+
+<!-- CARRITO -->
+<div class="carrito" id="carrito">
+  <h2>🛒 Carrito</h2>
+  <div id="lista"></div>
+
+  <div class="envio">
+    <strong>Opciones de envío:</strong>
+    <label>
+      <input type="radio" name="envio" value="0" checked onchange="render()"> 
+      <span>Retiro por local</span>
+    </label>
+    <label>
+      <input type="radio" name="envio" value="2500" onchange="render()"> 
+      <span>Con envío +$2.500</span>
+    </label>
+  </div>
+
+  <div class="total">
+    <strong>Total: $<span id="total">0</span></strong>
+  </div>
+  
+  <button onclick="pagar()" style="
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border-radius: 15px;
+    border: none;
+    background-color: #682636;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background 0.3s ease;
+  " onmouseover="this.style.background='#d17a8f'" onmouseout="this.style.background='#e09dae'">Pagar</button>
+</div>
+
+<!-- BOTON FLOTANTE MÓVIL -->
+<button id="btn-carrito" data-cantidad="0">🛒</button>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-contenido">
+    <span class="cerrar-modal" onclick="cerrarModal()">✖</span>
+    <h3 id="modal-titulo"></h3>
+    <div id="modal-opciones"></div>
+    <button onclick="agregar()" style="
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  padding: 12px;
+  border-radius: 15px;
+  border: none;
+  background-color: #682636;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+">
+  Agregar
+</button>
+  </div>
+</div>
+
+<script>
+  let cantidadModal = 1;
+  let lastScroll = 0;
+
+window.addEventListener("scroll", () => {
+  let header = document.querySelector(".header-pro");
+  let currentScroll = window.pageYOffset;
+
+  if (currentScroll > lastScroll && currentScroll > 7) {
+    // bajando → se oculta rápido y de a poco
+    header.classList.add("hide");
+  } else if (currentScroll < lastScroll) {
+    // subiendo → aparece rápido
+    header.classList.remove("hide");
+  }
+
+  lastScroll = currentScroll;
+});
+
+let carrito = [];
+let seleccion = "";
+let productoActual = {};
+
+// BOTON MÓVIL
+const btnCarrito = document.getElementById("btn-carrito");
+const carritoDiv = document.getElementById("carrito");
+btnCarrito.addEventListener("click", () => {
+  if(carritoDiv.style.display === "block") carritoDiv.style.display = "none";
+  else carritoDiv.style.display = "block";
+});
+
+// ABRIR MODAL
+function abrirModal(nombre, precio, opciones) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio };
+  seleccion = "";
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = "";
+
+  opciones.forEach(op => {
+    let btn = document.createElement("button");
+    btn.innerText = op.nombre;
+    if(op.sinStock){
+      btn.classList.add("sin-stock");
+      btn.disabled = true;
+    } else {
+      btn.onclick = () => {
+        seleccion = op.nombre;
+        document.querySelectorAll("#modal-opciones button").forEach(b => b.classList.remove("activa"));
+        btn.classList.add("activa");
+      };
+    }
+    contenedor.appendChild(btn);
+  });
+}
+
+// ABRIR MODAL SIMPLE (SIN OPCIONES)
+function abrirModalSimple(nombre, precio, descripcion) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio, descripcion };
+  seleccion = "";
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = `<p style="color:#666; font-size:13px; margin:15px 0;">${descripcion}</p>`;
+}
+
+// ABRIR MODAL CON IMÁGENES Y COLORES (----------PASAMONTAÑAS-----------)
+function abrirModalImagenes(nombre, precio) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio };
+  seleccion = "Negro"; // fijo
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = `
+    <div style="text-align:center; margin:15px 0;">
+      
+      <img src="pasamontañank.jpeg" 
+           style="width:70%; height:180px; object-fit:cover; border-radius:10px;">
+
+      <p style="margin-top:5px;">Color: Negro</p>
+
+      <p style="margin-top:10px; font-size:13px; color:#999;">Stock: 2 unidades</p>
+
+      <div style="margin-top:10px;">
+        <button onclick="cambiarCantidadModal(-1)">-</button>
+        <span id="cantidad-modal">1</span>
+        <button onclick="cambiarCantidadModal(1)">+</button>
+      </div>
+
+    </div>
+  `;
+
+  cantidadModal = 1;
+
+/*/ ---------- GUANTES -----------*/
+if (productoActual.nombre === "Guantes para Moto NK Tornasolado") {
+  let nombreCompleto = productoActual.nombre + " - Negro";
+
+  for (let i = 0; i < cantidadModal; i++) {
+    agregarAlCarrito(nombreCompleto, productoActual.precio);
+  }
+
+
+  cerrarModal();
+  return;
+} 
+}
+
+
+// ABRIR MODAL CON IMÁGENES Y COLORES (---------- GORRITO MATE Y TERMO -----------)
+function abrirModalGorrito(nombre, precio) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio };
+  seleccion = "";
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = `
+    <div style="margin: 15px 0;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+        <div style="text-align:center;">
+          <img src="matecitobeige.jpg" onclick="seleccionarImagen('matecitobeige.jpg', 'Beige')" style="width:100%; height:170px; object-fit:cover; border-radius:10px; cursor:pointer;">
+          <p>Bordo</p>
+        </div>
+
+        <div style="text-align:center;">
+          <img src="matecitocrema.jpg" onclick="seleccionarImagen('matecitocrema.jpg', 'Crema')" style="width:100%; height:170px; object-fit:cover; border-radius:10px; cursor:pointer;">
+          <p>Crema</p>
+        </div>
+
+      </div>
+      <p style="color:#999; font-size:12px; text-align:center;">Selecciona un color</p>
+    </div>
+  `;
+}
+
+// ABRIR MODAL CON IMÁGENES Y COLORES (---------- GUANTES PARA MOTO NK TORNASOLADO -----------)
+function abrirModalGuantes(nombre, precio) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio };
+  seleccion = "Negro";
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = `
+    <div style="text-align:center; margin:15px 0;">
+      
+      <img src="guantesnegro.jpg" 
+           style="width:70%; height:180px; object-fit:cover; border-radius:10px;">
+
+      <p style="margin-top:5px;">Color: Negro</p>
+
+      <p style="margin-top:10px; font-size:13px; color:#999;">Stock: 2 unidades</p>
+
+      <div style="margin-top:10px;">
+        <button onclick="cambiarCantidadModal(-1)">-</button>
+        <span id="cantidad-modal">1</span>
+        <button onclick="cambiarCantidadModal(1)">+</button>
+      </div>
+
+    </div>
+  `;
+
+  cantidadModal = 1;
+
+}
+
+// ABRIR MODAL CON IMÁGENES Y COLORES (---------- GORRO BORDADO SOL DE MAYO  -----------)
+function abrirModalGorroSol(nombre, precio) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio };
+  seleccion = "";
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = `
+    <div style="margin: 15px 0;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+
+        <div style="text-align:center;">
+          <img src="gorronegro.jpg" onclick="seleccionarImagen('gorronegro.jpg', 'Negro')" style="width:100%; height:170px; object-fit:cover; border-radius:10px; cursor:pointer;">
+          <p>Negro</p>
+        </div>
+
+        <div style="text-align:center;">
+          <img src="gorroceleste.jpg" onclick="seleccionarImagen('gorroceleste.jpg', 'Celeste')" style="width:100%; height:170px; object-fit:cover; border-radius:10px; cursor:pointer;">
+          <p>Celeste</p>
+        </div>
+
+        <div style="text-align:center;">
+          <img src="gorrobordo.jpg" onclick="seleccionarImagen('gorrobordo.jpg', 'Bordo')" style="width:100%; height:170px; object-fit:cover; border-radius:10px; cursor:pointer;">
+          <p>Bordo</p>
+        </div>
+        
+      </div>
+      <p style="color:#999; font-size:12px; text-align:center;">Selecciona un color</p>
+    </div>
+  `;
+}
+
+
+// ABRIR MODAL CON IMÁGENES Y COLORES (---------- GUANTE TACTIL -----------)
+function abrirModalGuantetactil(nombre, precio) {
+  document.getElementById("modal").style.display = "flex";
+  productoActual = { nombre, precio };
+  seleccion = "Gris";
+
+  document.getElementById("modal-titulo").innerText = nombre;
+
+  let contenedor = document.getElementById("modal-opciones");
+  contenedor.innerHTML = `
+    <div style="text-align:center; margin:15px 0;">
+      
+      <img src="guantetactil1.jpg" 
+           style="width:70%; height:180px; object-fit:cover; border-radius:10px;">
+
+      <p style="margin-top:5px;">Color: Gris</p>
+
+      <p style="margin-top:10px; font-size:13px; color:#999;">Stock: 2 unidades</p>
+
+      <div style="margin-top:10px;">
+        <button onclick="cambiarCantidadModal(-1)">-</button>
+        <span id="cantidad-modal">1</span>
+        <button onclick="cambiarCantidadModal(1)">+</button>
+      </div>
+
+    </div>
+  `;
+
+  cantidadModal = 1;
+}
+
+function seleccionarImagen(imagen, color) {
+  seleccion = color;
+  // Remover bordes de todas las imágenes
+  document.querySelectorAll('#modal-opciones img').forEach(img => {
+    img.style.border = '3px solid transparent';
+  });
+  // Agregar borde a la imagen seleccionada
+  event.target.style.border = '3px solid #e09dae';
+}
+
+
+function cerrarModal() {
+  document.getElementById("modal").style.display = "none";
+  seleccion = "";
+}
+
+function agregar() {
+  // Si es modal simple (cartera), agregar directamente
+  if (productoActual.descripcion) {
+    let nombreCompleto = productoActual.nombre + " - " + productoActual.descripcion;
+    agregarAlCarrito(nombreCompleto, productoActual.precio);
+    cerrarModal();
+    return;
+  }
+  
+  // Si es modal con imágenes (pasamontañas o gorrito)
+if (productoActual.nombre === "Pasamontañas") {
+  let nombreCompleto = productoActual.nombre + " - Negro";
+
+  for (let i = 0; i < cantidadModal; i++) {
+    agregarAlCarrito(nombreCompleto, productoActual.precio);
+  }
+
+  cerrarModal();
+  return;
+}
+
+  
+  // Si es modal con opciones, validar selección
+  if (!seleccion) {
+    alert("Elegí un producto 😊");
+    return;
+  }
+  let nombreCompleto = productoActual.nombre + " - " + seleccion;
+  agregarAlCarrito(nombreCompleto, productoActual.precio);
+  cerrarModal();
+}
+
+function cambiarCantidadModal(valor) {
+  cantidadModal += valor;
+
+  if (cantidadModal < 1) cantidadModal = 1;
+  if (cantidadModal > 2) cantidadModal = 2; // tu stock
+
+  document.getElementById("cantidad-modal").innerText = cantidadModal;
+}
+
+function agregarAlCarrito(nombre, precio){
+  let item = carrito.find(p => p.nombre === nombre);
+  if(item) item.cantidad++;
+  else carrito.push({nombre, precio, cantidad:1});
+  render();
+}
+
+function agregarDirecto(nombre, precio) {
+  agregarAlCarrito(nombre, precio);
+}
+
+function modificarCantidad(index, cambio){
+  carrito[index].cantidad += cambio;
+  if(carrito[index].cantidad <= 0){
+    carrito.splice(index,1);
+  }
+  render();
+}
+
+function actualizarBadge() {
+  let totalItems = carrito.reduce((acc, p) => acc + p.cantidad, 0);
+  let btn = document.getElementById("btn-carrito");
+  btn.setAttribute("data-cantidad", totalItems);
+  if (totalItems > 0) {
+    btn.style.setProperty('--badge-visibility', 'visible');
+  } else {
+    btn.style.setProperty('--badge-visibility', 'hidden');
+  }
+}
+
+function render(){
+  let lista = document.getElementById("lista");
+  let total = document.getElementById("total");
+
+  lista.innerHTML = "";
+  let totalFinal = 0;
+
+  if(carrito.length === 0) {
+    lista.innerHTML = '<p style="text-align:center; color:#999; padding:20px 0;">Tu carrito está vacío</p>';
+  } else {
+    carrito.forEach((p,index)=>{
+      let subtotal = p.precio * p.cantidad;
+      totalFinal += subtotal;
+
+      lista.innerHTML += `
+        <div class="item">
+          <div class="cantidad">
+            <button onclick="modificarCantidad(${index}, -1)">-</button>
+            <span>${p.cantidad}</span>
+            <button onclick="modificarCantidad(${index}, 1)">+</button>
+          </div>
+          <div class="detalle">
+            ${p.nombre} - $${p.precio.toLocaleString('es-AR')}<br>
+            Subtotal: $${subtotal.toLocaleString('es-AR')}
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  let envioSeleccionado = parseInt(document.querySelector('input[name="envio"]:checked').value);
+  totalFinal += envioSeleccionado;
+
+  total.innerText = totalFinal.toLocaleString('es-AR');
+  
+  actualizarBadge();
+}
+
+function pagar() {
+  if (carrito.length === 0) {
+    alert("El carrito está vacío 😊");
+    return;
+  }
+
+  let envioSeleccionado = parseInt(document.querySelector('input[name="envio"]:checked').value);
+  let envioTexto = envioSeleccionado === 0 ? "Retiro por local" : `Con envío +$${envioSeleccionado.toLocaleString('es-AR')}`;
+
+  let mensaje = "¡Hola! Quiero hacer el siguiente pedido:\n\n";
+
+  carrito.forEach(p => {
+    mensaje += `${p.cantidad} x ${p.nombre} - $${p.precio.toLocaleString('es-AR')} c/u\n`;
+  });
+
+  let totalFinal = carrito.reduce((acc,p)=> acc + p.precio*p.cantidad,0) + envioSeleccionado;
+  mensaje += `\n${envioTexto}\nTotal: $${totalFinal.toLocaleString('es-AR')}`;
+
+  let url = "https://wa.me/5492922412003?text=" + encodeURIComponent(mensaje); 
+  window.open(url, "_blank");
+}
+
+render();
+</script>
+
+
+<div class="redes">
+  <a href="https://www.instagram.com/latienditadecamiok_/" target="_blank">
+    <img src="ig.jpg" alt="Instagram">
+    <h3>Instagram</h3>
+  </a>
+
+  <a href="https://wa.me/5492922412003" target="_blank">
+    <img src="wsp.jpg" alt="WhatsApp">
+    <h3>WhatsApp</h3>
+  </a>
+</div>
+
+</body>
+</html>
