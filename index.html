@@ -906,49 +906,51 @@ function abrirModalSimple(nombre, precio, descripcion) {
   contenedor.innerHTML = `<p style="color:#666; font-size:13px; margin:15px 0;">${descripcion}</p>`;
 }
 
-// ABRIR MODAL CON IMÁGENES Y COLORES (----------PASAMONTAÑAS-----------)
 function abrirModalImagenes(nombre, precio) {
   document.getElementById("modal").style.display = "flex";
-  productoActual = { nombre, precio };
-  seleccion = "Negro"; // fijo
+
+  productoActual = {
+    nombre,
+    precio,
+    stock: 1
+  };
+
+  seleccion = "Negro";
+  cantidadModal = 1;
 
   document.getElementById("modal-titulo").innerText = nombre;
 
-  let contenedor = document.getElementById("modal-opciones");
-  contenedor.innerHTML = `
+  document.getElementById("modal-opciones").innerHTML = `
     <div style="text-align:center; margin:15px 0;">
-      
-      <img src="pasamontañank.jpeg" 
+      <img src="pasamontañank.jpeg"
            style="width:70%; height:180px; object-fit:cover; border-radius:10px;">
 
-      <p style="margin-top:5px;">Color: Negro</p>
+      <p>Color: Negro</p>
+      <p style="color:#999;">Stock: 1 unidad</p>
 
-      <p style="margin-top:10px; font-size:13px; color:#999;">Stock: 2 unidades</p>
-
-      <div style="margin-top:10px;">
+      <div>
         <button onclick="cambiarCantidadModal(-1)">-</button>
         <span id="cantidad-modal">1</span>
         <button onclick="cambiarCantidadModal(1)">+</button>
       </div>
-
     </div>
   `;
+}
 
-  cantidadModal = 1;
+function cambiarCantidadModal(valor) {
+  cantidadModal += valor;
 
-/*/ ---------- GUANTES -----------*/
-if (productoActual.nombre === "Guantes para Moto NK Tornasolado") {
-  let nombreCompleto = productoActual.nombre + " - Negro";
+  if (cantidadModal < 1) cantidadModal = 1;
 
-  for (let i = 0; i < cantidadModal; i++) {
-    agregarAlCarrito(nombreCompleto, productoActual.precio);
+  let stock = productoActual.stock ?? 99;
+
+  if (cantidadModal > stock) {
+    cantidadModal = stock;
   }
 
-
-  cerrarModal();
-  return;
-} 
+  document.getElementById("cantidad-modal").innerText = cantidadModal;
 }
+
 
 
 // ABRIR MODAL CON IMÁGENES Y COLORES (---------- GORRITO MATE Y TERMO -----------)
@@ -1105,10 +1107,12 @@ function agregar() {
   }
   
   // Si es modal con imágenes (pasamontañas o gorrito)
-if (productoActual.nombre === "Pasamontañas") {
+if (productoActual.nombre.includes("NK Térmico Importado")) {
   let nombreCompleto = productoActual.nombre + " - Negro";
 
-  for (let i = 0; i < cantidadModal; i++) {
+  let cantidadFinal = Math.min(cantidadModal, productoActual.stock ?? 1);
+
+  for (let i = 0; i < cantidadFinal; i++) {
     agregarAlCarrito(nombreCompleto, productoActual.precio);
   }
 
@@ -1132,10 +1136,13 @@ function cambiarCantidadModal(valor) {
 
   if (cantidadModal < 1) cantidadModal = 1;
 
-  // límite dinámico según producto
   let stock = 2;
 
   if (productoActual.nombre === "Guantes para Moto NK Tornasolado") {
+    stock = 1;
+  }
+
+  if (productoActual.nombre === "NK Térmico Importado") {
     stock = 1;
   }
 
