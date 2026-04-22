@@ -1066,7 +1066,7 @@ function abrirModalGuantetactil(nombre, precio) {
 
       <p style="margin-top:5px;">Color: Gris</p>
 
-      <p style="margin-top:10px; font-size:13px; color:#999;">Stock: 2 unidades</p>
+      <p style="margin-top:10px; font-size:13px; color:#999;">Stock: 1 unidad</p>
 
       <div style="margin-top:10px;">
         <button onclick="cambiarCantidadModal(-1)">-</button>
@@ -1136,7 +1136,7 @@ function cambiarCantidadModal(valor) {
 
   if (cantidadModal < 1) cantidadModal = 1;
 
-  let stock = 2;
+  let stock = 1;
 
   if (productoActual.nombre === "Guantes para Moto NK Tornasolado") {
     stock = 1;
