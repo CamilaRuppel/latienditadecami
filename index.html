@@ -581,6 +581,26 @@ h1 {
   color: #333;
 }
 
+.sin-stock-card {
+  opacity: 0.5;
+  filter: grayscale(100%);
+  pointer-events: none; /* 🔥 bloquea clicks */
+  position: relative;
+}
+
+.sin-stock-card::after {
+  content: "SIN STOCK";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #999;
+  color: white;
+  font-size: 12px;
+  padding: 5px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
 
 </style>
 </head>
@@ -761,7 +781,7 @@ h1 {
 </div>
 
 <!-- GUANTE TÁCTIL DE MOTO AD -->
-<div class="card" onclick="abrirModalGuantetactil('Sport', 9400)">
+<div class="card sin-stock-card">
   <img src="guantetactil.jpg">
   <div>
     <h3>Guante táctil</h3>
