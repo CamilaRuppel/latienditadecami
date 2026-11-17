@@ -290,9 +290,25 @@ h1 {
   width:92%;
   max-width:650px;
   max-height:85vh;
-  overflow-y:auto;
+  overflow-y:scroll;
   padding:20px;
   position:relative;
+  scrollbar-width:thin;
+  scrollbar-color:#e09dae #fceff3;
+}
+
+.modal-contenido::-webkit-scrollbar {
+  width:8px;
+}
+
+.modal-contenido::-webkit-scrollbar-track {
+  background:#fceff3;
+  border-radius:10px;
+}
+
+.modal-contenido::-webkit-scrollbar-thumb {
+  background:#e09dae;
+  border-radius:10px;
 }
 
 .cerrar-modal {
