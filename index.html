@@ -359,6 +359,13 @@ h1 {
   background:#fff5f8;
 }
 
+.sin-stock-card {
+  opacity: 0.5;
+  filter: grayscale(100%);
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .opcion-producto img {
   width:100%;
   height:155px;
@@ -500,7 +507,7 @@ h1 {
 
 <div class="productos">
 
- <div class="card sin-stock-card" onclick="abrirModal('Difusores Aromanza',12000,productos.difusores)">
+<div class="card sin-stock-card">
     <img src="difusores.jpeg">
     <div>
       <h3>Difusor Aromanza</h3>
