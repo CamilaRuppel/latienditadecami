@@ -561,7 +561,7 @@ h1 {
     </label>
     <label>
       <input type="radio" name="envio" value="2500" onchange="render()">
-      <span>Con envío +$2.500</span>
+      <span>Con envío +$3.000</span>
     </label>
   </div>
 
@@ -593,15 +593,15 @@ h1 {
 const productos = {
 
   difusores: [
-    {nombre:'Candy Grape', imagen:'difusor1.jpeg'},
-    {nombre:'Citric Orange', imagen:'difusor4.jpeg'},
-    {nombre:'Mix Floral', imagen:'difusor3.jpeg'},
-    {nombre:'Miel y Almendras', imagen:'difusor2.jpeg'},
+    {nombre:'Candy Grape', imagen:'difusor1.jpeg', sinStock: true},
+    {nombre:'Citric Orange', imagen:'difusor4.jpeg', sinStock: true},
+    {nombre:'Mix Floral', imagen:'difusor3.jpeg', sinStock: true},
+    {nombre:'Miel y Almendras', imagen:'difusor2.jpeg', sinStock: true},
     {nombre:'Premium Lemon', imagen:'difusor5.jpeg', sinStock: true}
   ],
 
   perfuminasAromanza: [
-    {nombre:'One Million', imagen:'elixir2.jpeg'},
+    {nombre:'One Million', imagen:'elixir2.jpeg', sinStock: true},
     {nombre:'Vie E Belle', imagen:'elixir4.jpeg'},
     {nombre: 'Amour Amour', imagen: 'elixir3.jpeg', sinStock: true},
     {nombre:'Flowers', imagen:'elixir1.jpeg'}
@@ -612,7 +612,7 @@ const productos = {
     {nombre:'Paula C', imagen:'iluminarte2.jpeg'},
     {nombre:'Caricias de Algodón', imagen:'iluminarte4.jpeg', sinStock: true},
     {nombre:'Lavandas del Valle', imagen:'iluminarte1.jpeg', sinStock: true},
-    {nombre:'Ropa Limpia', imagen:'iluminarte5.jpeg'}
+    {nombre:'Ropa Limpia', imagen:'iluminarte5.jpeg', sinStock: true}
   ],
 
   tao: [
