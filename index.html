@@ -487,6 +487,34 @@ h1 {
   .modal-contenido { padding:14px; }
   .opcion-producto img { height:125px; }
 }
+
+
+
+/* PRODUCTO SIN STOCK */
+.card.sin-stock {
+    position: relative;
+    filter: grayscale(100%);
+    opacity: 0.65;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+/* CARTEL SIN STOCK */
+.etiqueta-stock {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #555;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    z-index: 10;
+}
+
 </style>
 </head>
 
@@ -507,13 +535,13 @@ h1 {
 
 <div class="productos">
 
-<div class="card sin-stock-card">
+<div class="card sin-stock">
     <img src="difusores.jpeg">
     <div>
-      <h3>Difusor Aromanza</h3>
-      <p class="card-precio">$12.000</p>
-      <p class="card-aromas">Aromatizantes Textiles</p>
+        <h3>Difusor Aromanza</h3>
+        <p class="card-precio">$12.000</p>
     </div>
+    <span class="etiqueta-stock">SIN STOCK</span>
 </div>
 
   <div class="card" onclick="abrirModal('Perfuminas Aromanza',7400,productos.perfuminasAromanza)">
